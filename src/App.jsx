@@ -10,7 +10,7 @@ const App = () => {
   const [history, setHistory] = useState([{board: Array(9).fill(null),isXNext:true},]);
   const [currentMove,setCurrentMove]=useState(0);
   const current=history[currentMove];
-  const winner = calculateWinner(current.board);
+  const {winner,winningSquare} = calculateWinner(current.board);
   // const message = winner
   //   ? `Winner is ${winner}`
   //   : ` Turn for player ${current.isXNext ? 'O' : 'X'}`;
@@ -33,12 +33,16 @@ const App = () => {
  const moveTo=(move)=>{
      setCurrentMove(move);
  }
-
+ const onNewGame=()=>{
+   setHistory([{board: Array(9).fill(null),isXNext:true},])
+   setCurrentMove(0)
+   }
   return (
     <div className="app">
       <h1>TICTACTOE</h1>
      <StatusMessage winner={winner} current={current}/>
-      <Board board={current.board} handleSquareClick={handleSquareClick} />
+      <Board board={current.board} handleSquareClick={handleSquareClick} winningSquare={winningSquare} />
+      <button type="button" onClick={onNewGame}>Start New Game</button>
       <History history={history} moveTo={moveTo} currentMove={currentMove}/>
     </div>
   );
